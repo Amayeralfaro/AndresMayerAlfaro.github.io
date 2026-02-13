@@ -593,11 +593,11 @@
 
         <!-- Navigation -->
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showSection('overview')">Mission Overview</button>
-            <button class="nav-tab" onclick="showSection('dossier')">Personnel Dossier</button>
-            <button class="nav-tab" onclick="showSection('capabilities')">Capabilities</button>
-            <button class="nav-tab" onclick="showSection('history')">Mission History</button>
-            <button class="nav-tab" onclick="showSection('deploy')">Deploy Asset</button>
+            <button class="nav-tab active" onclick="showSection('overview', this)">Mission Overview</button>
+            <button class="nav-tab" onclick="showSection('dossier', this)">Personnel Dossier</button>
+            <button class="nav-tab" onclick="showSection('capabilities', this)">Capabilities</button>
+            <button class="nav-tab" onclick="showSection('history', this)">Mission History</button>
+            <button class="nav-tab" onclick="showSection('deploy', this)">Deploy Asset</button>
         </div>
 
         <!-- Overview Section -->
@@ -883,10 +883,7 @@
             document.getElementById(sectionId).classList.add('active');
             
             // Activate clicked tab
-            if (clickedButton) {
                 clickedButton.classList.add('active');
-            } else if (window.event && window.event.target) {
-                window.event.target.classList.add('active');
             }
         }
 
@@ -912,6 +909,7 @@
     </script>
 </body>
 </html>
+
 
 
 
