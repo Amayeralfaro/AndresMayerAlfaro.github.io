@@ -4,13 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MISSION PACKAGE - PERSONNEL DEPLOYMENT</title>
+    
+    <!-- SEO and Social Sharing Meta Tags -->
+    <meta name="description" content="Andres Mayer Alfaro - Operations & Logistics Specialist seeking to join Anduril Industries. 8+ years experience in field deployment and cross-border logistics.">
+    <meta name="author" content="Andres Mayer Alfaro">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mission Package - Andres Mayer | Operations & Logistics">
+    <meta property="og:description" content="Operations & Logistics Specialist with 8+ years experience in field deployment seeking to join Anduril Industries.">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Mission Package - Andres Mayer | Operations & Logistics">
+    <meta name="twitter:description" content="Operations & Logistics Specialist with 8+ years experience in field deployment seeking to join Anduril Industries.">
+    
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
@@ -18,6 +40,23 @@
             background: #0a0a0a;
             color: #00ff00;
             overflow-x: hidden;
+        }
+        
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #00ff00;
+            color: #0a0a0a;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100000;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        .skip-link:focus {
+            top: 0;
         }
         
         /* Scanline effect */
@@ -132,13 +171,19 @@
             font-size: 0.9em;
         }
         
-        /* Navigation tabs */
+        /* Navigation tabs - STICKY */
         .nav-tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 30px;
             flex-wrap: wrap;
             justify-content: center;
+            position: sticky;
+            top: 0;
+            background: #0a0a0a;
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 2px solid #00ff00;
         }
         
         .nav-tab {
@@ -151,6 +196,7 @@
             font-size: 1em;
             transition: all 0.3s;
             text-transform: uppercase;
+            text-decoration: none;
         }
         
         .nav-tab:hover {
@@ -164,25 +210,10 @@
             color: #0a0a0a;
         }
         
-        /* Content sections */
+        /* Content sections - ALL VISIBLE */
         .content-section {
-            display: none;
-            animation: slideIn 0.5s forwards;
-        }
-        
-        .content-section.active {
-            display: block;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            padding: 40px 0;
+            scroll-margin-top: 100px;
         }
         
         /* Dossier card */
@@ -579,6 +610,9 @@
     </style>
 </head>
 <body>
+    <!-- Skip to content link for accessibility -->
+    <a href="#mainContainer" class="skip-link">Skip to main content</a>
+    
     <!-- Boot Sequence -->
     <div class="boot-sequence" id="bootSequence">
         <div class="boot-text">> INITIALIZING MISSION PACKAGE...</div>
@@ -590,7 +624,7 @@
     </div>
 
     <!-- Main Container -->
-    <div class="container" id="mainContainer">
+    <div class="container" id="mainContainer" role="main">
         <!-- Header -->
         <div class="header">
             <div class="classified-header glitch" data-text="CLASSIFIED">CLASSIFIED</div>
@@ -599,16 +633,16 @@
         </div>
 
         <!-- Navigation -->
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showSection('overview')">Mission Overview</button>
-            <button class="nav-tab" onclick="showSection('dossier')">Personnel Dossier</button>
-            <button class="nav-tab" onclick="showSection('capabilities')">Capabilities</button>
-            <button class="nav-tab" onclick="showSection('history')">Mission History</button>
-            <button class="nav-tab" onclick="showSection('deploy')">Deploy Asset</button>
+        <div class="nav-tabs" role="navigation" aria-label="Main navigation">
+            <a href="#overview" class="nav-tab" aria-label="Jump to mission overview section">Mission Overview</a>
+            <a href="#dossier" class="nav-tab" aria-label="Jump to personnel dossier section">Personnel Dossier</a>
+            <a href="#capabilities" class="nav-tab" aria-label="Jump to capabilities section">Capabilities</a>
+            <a href="#history" class="nav-tab" aria-label="Jump to mission history section">Mission History</a>
+            <a href="#deploy" class="nav-tab" aria-label="Jump to deployment section">Deploy Asset</a>
         </div>
 
         <!-- Overview Section -->
-        <div class="content-section active" id="overview">
+        <section class="content-section" id="overview">
             <div class="dossier-card">
                 <h2 class="section-title">⚡ MISSION BRIEFING</h2>
                 <p style="color: #ccc; line-height: 1.8; margin: 20px 0;">
@@ -638,10 +672,10 @@
                     <div class="stat-label">AVAILABILITY</div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Dossier Section -->
-        <div class="content-section" id="dossier">
+        <section class="content-section" id="dossier">
             <div class="dossier-card">
                 <h2 class="section-title">📋 OPERATIVE PROFILE</h2>
                 <div class="info-grid">
@@ -697,10 +731,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Capabilities Section -->
-        <div class="content-section" id="capabilities">
+        <section class="content-section" id="capabilities">
             <div class="dossier-card">
                 <h2 class="section-title">⚙️ OPERATIONAL CAPABILITIES</h2>
                 <ul class="capability-list">
@@ -733,10 +767,10 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </section>
 
         <!-- History Section -->
-        <div class="content-section" id="history">
+        <section class="content-section" id="history">
             <div class="dossier-card">
                 <h2 class="section-title">📊 MISSION HISTORY</h2>
                 <div class="timeline">
@@ -795,10 +829,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Deploy Section -->
-        <div class="content-section" id="deploy">
+        <section class="content-section" id="deploy">
             <div class="deployment-section">
                 <div class="deploy-title">⚠️ DEPLOYMENT AUTHORIZATION REQUIRED ⚠️</div>
                 <div class="deploy-text">
@@ -812,7 +846,7 @@
                 <h3 class="download-title">📁 MISSION DOCUMENTS</h3>
                 <p style="color: #888; margin-bottom: 20px;">Access complete personnel files and supporting documentation:</p>
                 <button class="download-button" onclick="downloadResume()">📄 Resume (PDF)</button>
-                <button class="download-button" onclick="window.open('https://www.linkedin.com/in/andres-mayer', '_blank')">🔗 LinkedIn Profile</button>
+                <button class="download-button" onclick="window.open('https://www.linkedin.com/in/andres-mayer', '_blank', 'noopener,noreferrer')">🔗 LinkedIn Profile</button>
             </div>
 
             <div class="dossier-card">
@@ -822,21 +856,21 @@
                         <div class="contact-icon">📧</div>
                         <div class="contact-label">PRIMARY EMAIL</div>
                         <div class="contact-value">
-                            <a href="mailto:andresmayeralfaro@gmail.com" class="contact-link">andresmayeralfaro@gmail.com</a>
+                            <a href="mailto:andresmayeralfaro@gmail.com" class="contact-link" rel="noopener">andresmayeralfaro@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-card">
                         <div class="contact-icon">📱</div>
                         <div class="contact-label">DIRECT LINE</div>
                         <div class="contact-value">
-                            <a href="tel:+16192744295" class="contact-link">+1 (619) 274-4295</a>
+                            <a href="tel:+16192744295" class="contact-link" rel="noopener">+1 (619) 274-4295</a>
                         </div>
                     </div>
                     <div class="contact-card">
                         <div class="contact-icon">🔗</div>
                         <div class="contact-label">LINKEDIN</div>
                         <div class="contact-value">
-                            <a href="https://www.linkedin.com/in/andres-mayer" target="_blank" class="contact-link">Connect on LinkedIn</a>
+                            <a href="https://www.linkedin.com/in/andres-mayer" target="_blank" rel="noopener noreferrer" class="contact-link">Connect on LinkedIn</a>
                         </div>
                     </div>
                 </div>
@@ -854,7 +888,7 @@
                     <strong style="color: #00ffff;">MISSION ALIGNMENT:</strong> I've always approached logistics with a mission-critical mindset. At Reibus, getting steel to construction sites on time meant projects stayed on schedule and workers stayed employed. At Hall Farmstead, zero temperature failures wasn't just a metric—it was the difference between a customer succeeding or losing their business. Anduril's work takes this to the next level—autonomous defense systems protecting people's lives and national security. That's the kind of consequential work where my attention to detail, accountability, and refusal to accept failure actually matters.
                 </p>
             </div>
-        </div>
+        </section>
 
         <!-- Footer -->
         <div class="footer">
@@ -872,36 +906,13 @@
             }, 2000);
         });
 
-        // Tab navigation
-        function showSection(sectionId, clickedButton) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Remove active from all tabs
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Activate clicked tab
-            if (clickedButton) {
-                clickedButton.classList.add('active');
-            } else if (window.event && window.event.target) {
-                window.event.target.classList.add('active');
-            }
-        }
-
-        // Download resume function - FIXED
+        // Download resume function
         function downloadResume() {
-            // Your Google Drive resume link - converted to direct download
-            const resumeUrl = 'https://drive.google.com/uc?export=download&id=1qsjPXo_bJeLqFN8Zy2Q0G_y_DxRGFLft';
-            window.open(resumeUrl, '_blank');
+            // Direct download of local file
+            const link = document.createElement('a');
+            link.href = 'Andres_Mayer_Alfaro_Resume.pdf';
+            link.download = 'Andres_Mayer_Resume.pdf';
+            link.click();
         }
 
         // Easter egg: Konami code
