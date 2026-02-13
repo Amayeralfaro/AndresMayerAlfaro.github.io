@@ -1,54 +1,26 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MISSION PACKAGE - PERSONNEL DEPLOYMENT</title>
-
-  <!-- SEO and Social Sharing Meta Tags -->
-  <meta name="description" content="Andres Mayer Alfaro - Operations & Logistics Specialist seeking to join Anduril Industries. 8+ years experience in field deployment and cross-border logistics.">
-  <meta name="author" content="Andres Mayer Alfaro">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Mission Package - Andres Mayer | Operations & Logistics">
-  <meta property="og:description" content="Operations & Logistics Specialist with 8+ years experience in field deployment seeking to join Anduril Industries.">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Mission Package - Andres Mayer | Operations & Logistics">
-  <meta name="twitter:description" content="Operations & Logistics Specialist with 8+ years experience in field deployment seeking to join Anduril Industries.">
-
-  <!-- Preconnect to Google Fonts for faster loading -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISSION PACKAGE - PERSONNEL DEPLOYMENT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        /* Skip link for accessibility */
-        .skip-link {
-          position: absolute;
-          top: -40px;
-          left: 0;
-          background: #00ff00;
-          color: #0a0a0a;
-          padding: 8px;
-          text-decoration: none;
-          z-index: 100000;
-          font-family: 'Share Tech Mono', monospace;
+        
+        body {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            overflow-x: hidden;
         }
-    
-        .skip-link:focus {
-          top: 0;
-        }
-
-    /* Scanline effect */
+        
+        /* Scanline effect */
         body::before {
             content: '';
             position: fixed;
@@ -604,13 +576,10 @@
             95% { clip: rect(22px, 9999px, 79px, 0); }
             100% { clip: rect(58px, 9999px, 48px, 0); }
         }
-  </style>
+    </style>
 </head>
 <body>
-  <!-- Skip to content link for accessibility -->
-  <a href="#mainContainer" class="skip-link">Skip to main content</a>
-  
-  <!-- Boot Sequence -->
+    <!-- Boot Sequence -->
     <div class="boot-sequence" id="bootSequence">
         <div class="boot-text">> INITIALIZING MISSION PACKAGE...</div>
         <div class="boot-text">> LOADING PERSONNEL DATA...</div>
@@ -621,7 +590,7 @@
     </div>
 
     <!-- Main Container -->
-    <div class="container" id="mainContainer" role="main">
+    <div class="container" id="mainContainer">
         <!-- Header -->
         <div class="header">
             <div class="classified-header glitch" data-text="CLASSIFIED">CLASSIFIED</div>
@@ -630,12 +599,12 @@
         </div>
 
         <!-- Navigation -->
-        <div class="nav-tabs" role="navigation" aria-label="Main navigation">
-            <button class="nav-tab active" onclick="showSection('overview', this)" aria-label="View mission overview section">Mission Overview</button>
-            <button class="nav-tab" onclick="showSection('dossier', this)" aria-label="View personnel dossier section">Personnel Dossier</button>
-            <button class="nav-tab" onclick="showSection('capabilities', this)" aria-label="View capabilities section">Capabilities</button>
-            <button class="nav-tab" onclick="showSection('history', this)" aria-label="View mission history section">Mission History</button>
-            <button class="nav-tab" onclick="showSection('deploy', this)" aria-label="View deployment section">Deploy Asset</button>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('overview')">Mission Overview</button>
+            <button class="nav-tab" onclick="showSection('dossier')">Personnel Dossier</button>
+            <button class="nav-tab" onclick="showSection('capabilities')">Capabilities</button>
+            <button class="nav-tab" onclick="showSection('history')">Mission History</button>
+            <button class="nav-tab" onclick="showSection('deploy')">Deploy Asset</button>
         </div>
 
         <!-- Overview Section -->
@@ -843,7 +812,7 @@
                 <h3 class="download-title">📁 MISSION DOCUMENTS</h3>
                 <p style="color: #888; margin-bottom: 20px;">Access complete personnel files and supporting documentation:</p>
                 <button class="download-button" onclick="downloadResume()">📄 Resume (PDF)</button>
-                <button class="download-button" onclick="window.open('https://www.linkedin.com/in/andres-mayer', '_blank', 'noopener,noreferrer')">🔗 LinkedIn Profile</button>
+                <button class="download-button" onclick="window.open('https://www.linkedin.com/in/andres-mayer', '_blank')">🔗 LinkedIn Profile</button>
             </div>
 
             <div class="dossier-card">
@@ -853,21 +822,21 @@
                         <div class="contact-icon">📧</div>
                         <div class="contact-label">PRIMARY EMAIL</div>
                         <div class="contact-value">
-                            <a href="mailto:andresmayeralfaro@gmail.com" class="contact-link" rel="noopener">andresmayeralfaro@gmail.com</a>
+                            <a href="mailto:andresmayeralfaro@gmail.com" class="contact-link">andresmayeralfaro@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-card">
                         <div class="contact-icon">📱</div>
                         <div class="contact-label">DIRECT LINE</div>
                         <div class="contact-value">
-                            <a href="tel:+16192744295" class="contact-link" rel="noopener">+1 (619) 274-4295</a>
+                            <a href="tel:+16192744295" class="contact-link">+1 (619) 274-4295</a>
                         </div>
                     </div>
                     <div class="contact-card">
                         <div class="contact-icon">🔗</div>
                         <div class="contact-label">LINKEDIN</div>
                         <div class="contact-value">
-                            <a href="https://www.linkedin.com/in/andres-mayer" target="_blank" rel="noopener noreferrer" class="contact-link">Connect on LinkedIn</a>
+                            <a href="https://www.linkedin.com/in/andres-mayer" target="_blank" class="contact-link">Connect on LinkedIn</a>
                         </div>
                     </div>
                 </div>
@@ -921,16 +890,18 @@
             document.getElementById(sectionId).classList.add('active');
             
             // Activate clicked tab
+            if (clickedButton) {
                 clickedButton.classList.add('active');
+            } else if (window.event && window.event.target) {
+                window.event.target.classList.add('active');
             }
+        }
 
         // Download resume function - FIXED
         function downloadResume() {
-            // Direct download of local file
-            const link = document.createElement('a');
-            link.href = 'Andres_Mayer_Alfaro_Resume.pdf';
-            link.download = 'Andres_Mayer_Resume.pdf';
-            link.click();
+            // Your Google Drive resume link - converted to direct download
+            const resumeUrl = 'https://drive.google.com/uc?export=download&id=1qsjPXo_bJeLqFN8Zy2Q0G_y_DxRGFLft';
+            window.open(resumeUrl, '_blank');
         }
 
         // Easter egg: Konami code
@@ -948,9 +919,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
