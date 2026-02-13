@@ -572,35 +572,346 @@
   </style>
 </head>
 <body>
-  <h1>Your Name</h1>
-  <p class="meta">City, State · email@domain.com · LinkedIn · GitHub</p>
+  <!-- Boot Sequence -->
+    <div class="boot-sequence" id="bootSequence">
+        <div class="boot-text">> INITIALIZING MISSION PACKAGE...</div>
+        <div class="boot-text">> LOADING PERSONNEL DATA...</div>
+        <div class="boot-text">> DECRYPTING CLASSIFIED FILES...</div>
+        <div class="boot-text">> AUTHENTICATING CREDENTIALS...</div>
+        <div class="boot-text">> SYSTEM READY</div>
+        <div class="boot-text">> ACCESS GRANTED</div>
+    </div>
 
-  <div class="section">
-    <h2>Summary</h2>
-    <p>1–3 lines on what you do and what you’re aiming for.</p>
-  </div>
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <!-- Header -->
+        <div class="header">
+            <div class="classified-header glitch" data-text="CLASSIFIED">CLASSIFIED</div>
+            <div class="mission-title">PERSONNEL DEPLOYMENT PACKAGE</div>
+            <div class="mission-id">MISSION ID: ANDURIL-RECRUIT-2026 | SECURITY LEVEL: RECRUITING EYES ONLY</div>
+        </div>
 
-  <div class="section">
-    <h2>Experience</h2>
-    <p><b>Company</b> — Title (Dates)</p>
-    <ul>
-      <li>Impact bullet with metrics.</li>
-      <li>Impact bullet with metrics.</li>
-    </ul>
-  </div>
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('overview')">Mission Overview</button>
+            <button class="nav-tab" onclick="showSection('dossier')">Personnel Dossier</button>
+            <button class="nav-tab" onclick="showSection('capabilities')">Capabilities</button>
+            <button class="nav-tab" onclick="showSection('history')">Mission History</button>
+            <button class="nav-tab" onclick="showSection('deploy')">Deploy Asset</button>
+        </div>
 
-  <div class="section">
-    <h2>Projects</h2>
-    <ul>
-      <li><a href="#">Project Name</a> — one-line value</li>
-    </ul>
-  </div>
+        <!-- Overview Section -->
+        <div class="content-section active" id="overview">
+            <div class="dossier-card">
+                <h2 class="section-title">⚡ MISSION BRIEFING</h2>
+                <p style="color: #ccc; line-height: 1.8; margin: 20px 0;">
+                    <strong style="color: #00ff00;">OBJECTIVE:</strong> Deploy high-value talent asset to Anduril Industries for immediate integration into Operations & Logistics Associate.<br><br>
+                    
+                    <strong style="color: #00ff00;">BACKGROUND:</strong> This operative has demonstrated exceptional capability in Supply Chain & Logistics Operations, with proven track record in mission-critical deployments. Current status: <span style="color: #00ffff;">READY FOR IMMEDIATE DEPLOYMENT</span>.<br><br>
+                    
+                    <strong style="color: #00ff00;">RECOMMENDATION:</strong> Fast-track to interview phase for tactical assessment.
+                </p>
+            </div>
 
-  <div class="section">
-    <h2>Skills</h2>
-    <p>Sales · Ops · Trade Finance · Logistics · HubSpot · Salesforce</p>
-  </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">MISSION SUCCESS RATE</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">8+</div>
+                    <div class="stat-label">YEARS EXPERIENCE</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">DETERMINATION LEVEL</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">AVAILABILITY</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dossier Section -->
+        <div class="content-section" id="dossier">
+            <div class="dossier-card">
+                <h2 class="section-title">📋 OPERATIVE PROFILE</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">DESIGNATION</div>
+                        <div class="info-value">ANDRES MAYER ALFARO</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">SPECIALIZATION</div>
+                        <div class="info-value">Field Deployment Operations</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">CLEARANCE LEVEL</div>
+                        <div class="info-value">ELIGIBLE FOR U.S. SECRET SECURITY CLEARANCE</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">CURRENT LOCATION</div>
+                        <div class="info-value">Atlanta, GA</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">DEPLOYMENT STATUS</div>
+                        <div class="info-value" style="color: #00ffff;">AVAILABLE</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">TARGET ORGANIZATION</div>
+                        <div class="info-value">ANDURIL INDUSTRIES</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">RELOCATION STATUS</div>
+                        <div class="info-value" style="color: #00ffff;">AVAILABLE FOR IMMEDIATE DEPLOYMENT TO COSTA MESA, CA</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dossier-card">
+                <h2 class="section-title">🎯 CORE COMPETENCIES</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">PRIMARY SKILL</div>
+                        <div class="info-value">Field Deployment Operations</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">SECONDARY SKILL</div>
+                        <div class="info-value">Cross-Border LATAM Logistics & Trade Compliance</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">TERTIARY SKILL</div>
+                        <div class="info-value">Systems Integration & Process Optimization</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">TECHNICAL PROFICIENCY</div>
+                        <div class="info-value">Salesforce CRM, Odoo, Oracle ERP, Slack, Project44, Turvo, JIRA, Excel, WMS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Capabilities Section -->
+        <div class="content-section" id="capabilities">
+            <div class="dossier-card">
+                <h2 class="section-title">⚙️ OPERATIONAL CAPABILITIES</h2>
+                <ul class="capability-list">
+                    <li class="capability-item">
+                        <div class="capability-name">CAPABILITY ALPHA: Field Deployment Operations</div>
+                        <div class="capability-desc">
+                            Specialized in on-site deployment planning and execution for hardware and equipment across logistically challenging environments. Conducted field operations in 5 countries—from manufacturing facilities in Mexico to ocean ports in South America—building infrastructure and solving problems where they actually happen.
+                        </div>
+                        <div class="capability-metric">
+                            ▸ IMPACT: Boots-on-ground approach enabled execution of 2,500+ shipments with 98% on-time performance.
+                        </div>
+                    </li>
+                    <li class="capability-item">
+                        <div class="capability-name">CAPABILITY BRAVO: Cross-Border Logistics & Trade Compliance</div>
+                        <div class="capability-desc">
+                            Built U.S.-Mexico-LATAM logistics platform from scratch in 8 months, managing all aspects of international trade compliance including USMCA regulations, customs documentation, tariff classification, and physical inspections at border crossings.
+                        </div>
+                        <div class="capability-metric">
+                            ▸ IMPACT: Executed 2,500+ international shipments with 98.4% on-time performance and zero compliance violations.
+                        </div>
+                    </li>
+                    <li class="capability-item">
+                        <div class="capability-name">CAPABILITY CHARLIE: Systems Integration & Process Optimization</div>
+                        <div class="capability-desc">
+                            Proficient in implementing and integrating ERP/CRM systems like Oracle, Salesforce, Odoo, and JIRA to mirror physical operations and enable real-time visibility.
+                        </div>
+                        <div class="capability-metric">
+                            ▸ IMPACT: Reduced fulfillment errors by 67%, increased throughput by 140%, and maintained 99%+ operational accuracy across multiple facilities.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="content-section" id="history">
+            <div class="dossier-card">
+                <h2 class="section-title">📊 MISSION HISTORY</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Oct 2024 - PRESENT</div>
+                        <div class="timeline-role">Head of Fulfillment & Supply Chain Solutions</div>
+                        <div class="timeline-company">Hall Farmstead | Atlanta, GA</div>
+                        <ul class="timeline-achievements">
+                            <li>Managed end-to-end cold-chain logistics and fulfillment planning for high-complexity perishable operations, maintaining 99.2% SLA compliance across 55+ recurring wholesale accounts with zero temperature failures.</li>
+                            <li>Authored SOPs for 3PL warehouse partners to eliminate execution bottlenecks in pick/pack/ship workflows, reducing fulfillment errors 67% and cutting average order processing time from 48hrs to 18hrs.</li>
+                            <li>Forecasted shipping capacity and coordinated with FedEx/UPS to meet volatile demand surges during product launches and seasonal peaks (Thanksgiving, Christmas), handling 400% volume spikes without service degradation.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">Nov 2022 - Oct 2024</div>
+                        <div class="timeline-role">Logistics & Cross-Border Operations Manager (LATAM)</div>
+                        <div class="timeline-company">Reibus International | Atlanta, GA</div>
+                        <ul class="timeline-achievements">
+                            <li>Designed and deployed integrated U.S.-Mexico-LATAM logistics platform across 5 countries in 8 months, conducting on-site assessments at manufacturing facilities, distribution centers, ocean ports, and customs points of entry throughout the U.S., Mexico, Canada, Brazil, and Argentina to build automated compliance workflows and carrier networks.</li>
+                            <li>Executed 2,500+ domestic and international shipments totaling $47M in steel inventory, maintaining 98.4% OTIF performance while navigating specialized transportation requirements (flatbed, heavy haul, ocean freight and specialty equipment).</li>
+                            <li>Owned post-sale deployment lifecycle: managed stakeholder discovery, coordinated EDI/ERP system integrations, and resolved delivery discrepancies in real-time for 35+ active enterprise accounts.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">Jan 2017 - Nov 2022</div>
+                        <div class="timeline-role">Director of Logistics and Implementation</div>
+                        <div class="timeline-company">Mayer Group Inc. | San Diego, CA</div>
+                        <ul class="timeline-achievements">
+                            <li>Launched white-label transportation platform from concept to deployment, owning end-to-end planning for warehousing, last-mile delivery, and systems integration across 4 distribution centers.</li>
+                            <li>Planned warehouse capacity, storage layouts, and throughput requirements to support forecasted demand, optimizing for cost efficiency and OTIF delivery targets.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dossier-card">
+                <h2 class="section-title">🎓 TRAINING & CERTIFICATIONS</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">DEGREE</div>
+                        <div class="info-value">Bachelor of Architecture</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">INSTITUTION</div>
+                        <div class="info-value">NewSchool of Architecture & Design</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">CERTIFICATIONS</div>
+                        <div class="info-value">Developing Innovative Ideas for Product Leaders (University of Maryland)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">SPECIALIZED TRAINING</div>
+                        <div class="info-value">USMCA Trade Compliance & Customs Operations, Heavy Equipment & Specialized Transportation, Cold-Chain Logistics & Temperature-Controlled Operations, Field Operations & Site Assessment, Enterprise Systems, Data Analysis & KPI Management, EDI & Systems Integration, Multilingual Operations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deploy Section -->
+        <div class="content-section" id="deploy">
+            <div class="deployment-section">
+                <div class="deploy-title">⚠️ DEPLOYMENT AUTHORIZATION REQUIRED ⚠️</div>
+                <div class="deploy-text">
+                    This asset is mission-ready and cleared for immediate integration into Anduril Industries operations. 
+                    Authorization from Talent Acquisition required to proceed with tactical interview briefing.
+                </div>
+                <button class="deploy-button" onclick="downloadResume()">⬇ DOWNLOAD FULL DOSSIER</button>
+            </div>
+
+            <div class="download-section">
+                <h3 class="download-title">📁 MISSION DOCUMENTS</h3>
+                <p style="color: #888; margin-bottom: 20px;">Access complete personnel files and supporting documentation:</p>
+                <button class="download-button" onclick="downloadResume()">📄 Resume (PDF)</button>
+                <button class="download-button" onclick="window.open('https://www.linkedin.com/in/andres-mayer', '_blank')">🔗 LinkedIn Profile</button>
+            </div>
+
+            <div class="dossier-card">
+                <h2 class="section-title">📡 SECURE COMMUNICATION CHANNELS</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-label">PRIMARY EMAIL</div>
+                        <div class="contact-value">
+                            <a href="mailto:andresmayeralfaro@gmail.com" class="contact-link">andresmayeralfaro@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-label">DIRECT LINE</div>
+                        <div class="contact-value">
+                            <a href="tel:+16192744295" class="contact-link">+1 (619) 274-4295</a>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🔗</div>
+                        <div class="contact-label">LINKEDIN</div>
+                        <div class="contact-value">
+                            <a href="https://www.linkedin.com/in/andres-mayer" target="_blank" class="contact-link">Connect on LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dossier-card" style="border-color: #00ffff;">
+                <h2 class="section-title" style="color: #00ffff;">💡 WHY ANDURIL?</h2>
+                <p style="color: #ccc; line-height: 1.8; margin: 20px 0;">
+                    When I saw this role, it felt like it was written for me—Anduril is deploying autonomous defense systems to customers in mission-critical, logistically challenging environments, and I've spent 8 years doing exactly that: building cross-border deployment infrastructure across 5 countries, executing 2,500+ hardware shipments, and solving problems on-site from manufacturing facilities in Mexico to ocean ports in South America.
+                </p>
+                <p style="color: #ccc; line-height: 1.8;">
+                    The work Anduril is doing matters—protecting borders and supporting critical defense operations—and that mission-critical focus aligns with how I approach logistics: when deployments fail, there are real consequences. I already understand the systems you use—Oracle ERP, Salesforce, Odoo, JIRA—I'm eligible for Secret clearance, and I'm not afraid to get on a plane to solve problems at customer sites.
+                </p>
+                <p style="color: #ccc; line-height: 1.8;">
+                    <strong style="color: #00ffff;">MISSION ALIGNMENT:</strong> I've always approached logistics with a mission-critical mindset. At Reibus, getting steel to construction sites on time meant projects stayed on schedule and workers stayed employed. At Hall Farmstead, zero temperature failures wasn't just a metric—it was the difference between a customer succeeding or losing their business. Anduril's work takes this to the next level—autonomous defense systems protecting people's lives and national security. That's the kind of consequential work where my attention to detail, accountability, and refusal to accept failure actually matters.
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>MISSION PACKAGE v2.0 | CLASSIFIED PERSONNEL FILE</p>
+            <p>This document is intended for authorized Anduril Industries recruiting personnel only</p>
+            <p style="margin-top: 20px; color: #00ff00;">Ready to discuss deployment? Let's connect.</p>
+        </div>
+    </div>
+
+    <script>
+        // Boot sequence
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('bootSequence').classList.add('hidden');
+            }, 2000);
+        });
+
+        // Tab navigation
+        function showSection(sectionId, clickedButton) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Activate clicked tab
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            } else if (window.event && window.event.target) {
+                window.event.target.classList.add('active');
+            }
+        }
+
+        // Download resume function - FIXED
+        function downloadResume() {
+            // Your Google Drive resume link - converted to direct download
+            const resumeUrl = 'https://drive.google.com/uc?export=download&id=1qsjPXo_bJeLqFN8Zy2Q0G_y_DxRGFLft';
+            window.open(resumeUrl, '_blank');
+        }
+
+        // Easter egg: Konami code
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+            
+            if (konamiCode.join('') === konamiSequence.join('')) {
+                alert('🎮 CHEAT CODE ACTIVATED!\n\nYou found the easter egg. This candidate pays attention to details. 😉');
+            }
+        });
+    </script>
 </body>
 </html>
+
 
 
