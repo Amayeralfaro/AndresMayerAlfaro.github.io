@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABL Underwriting Tool</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <header>
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+        <path d="M7 8h10M7 11h6"/>
+      </svg>
+      <div>
+        <h1>ABL Underwriting Tool</h1>
+        <div class="subtitle" id="company-subtitle"></div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm" id="btn-new-deal">+ New Deal</button>
+      <button class="btn btn-accent btn-sm" id="btn-ai-extract">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        AI Extract
+      </button>
+      <button class="btn btn-secondary btn-sm" id="btn-save">Save</button>
+      <button class="btn btn-secondary btn-sm" id="btn-export">Export</button>
+      <button class="btn btn-secondary btn-sm" id="btn-settings" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <div class="body-wrap">
+
+    <!-- ── Sidebar ───────────────────────────────────────────────────────── -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        Deals
+        <button class="btn btn-secondary btn-sm" id="btn-import-deal" title="Import deal JSON">↑</button>
+      </div>
+      <div id="deal-list"></div>
+    </nav>
+
+    <!-- ── Main ──────────────────────────────────────────────────────────── -->
+    <div id="main">
+
+      <!-- Empty state -->
+      <div id="empty-state">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="11" x2="12" y2="17"/>
+          <line x1="9" y1="14" x2="15" y2="14"/>
+        </svg>
+        <h2>No Deal Selected</h2>
+        <p>Click <strong>+ New Deal</strong> to start a new underwriting file, or select an existing deal from the sidebar.</p>
+        <button class="btn btn-primary" id="btn-new-deal-2">+ New Deal</button>
+      </div>
+
+      <!-- Deal workspace (hidden until a deal is active) -->
+      <div id="deal-workspace" style="display:none; flex-direction:column; height:100%; overflow:hidden;">
+
+        <!-- Deal header bar -->
+        <div id="deal-header-bar">
+          <div class="deal-title" id="deal-title-display">—</div>
+          <span class="badge badge-yellow" id="deal-stage-badge">Prospect</span>
+          <div style="margin-left:auto; display:flex; gap:8px;">
+            <button class="btn btn-danger btn-sm" id="btn-delete-deal">Delete Deal</button>
+          </div>
+        </div>
+
+        <!-- Tab bar -->
+        <div id="tab-bar">
+          <button class="tab-btn active" data-tab="deal-overview">Deal Overview</button>
+          <button class="tab-btn" data-tab="borrower">Borrower</button>
+          <button class="tab-btn" data-tab="ar-eligibility">A/R Eligibility</button>
+          <button class="tab-btn" data-tab="inventory">Inventory</button>
+          <button class="tab-btn" data-tab="re-equipment">RE & Equipment</button>
+          <button class="tab-btn" data-tab="financial">Financial Analysis</button>
+          <button class="tab-btn" data-tab="credit-memo">Credit Memo</button>
+          <button class="tab-btn" data-tab="bbc">Borrowing Base Cert.</button>
+          <button class="tab-btn" data-tab="field-exam">Field Exam</button>
+          <button class="tab-btn" data-tab="collateral-monitoring">Collateral Mon.</button>
+          <button class="tab-btn" data-tab="covenant-calendar">Covenant Calendar</button>
+          <button class="tab-btn" data-tab="history">History</button>
+        </div>
+
+        <!-- Tab content -->
+        <div id="tab-content">
+
+          <!-- ═══════════════ 1. DEAL OVERVIEW ═════════════════════════════ -->
+          <div class="tab-pane active" id="tab-deal-overview">
+            <div class="card">
+              <div class="card-header"><h3>Deal Overview</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-4">
+                  <div class="field col-span-2"><label>Borrower / Company Name</label><input type="text" data-field="deal_borrower_name" placeholder="ABC Manufacturing LLC" /></div>
+                  <div class="field"><label>Deal Stage</label>
+                    <select data-field="deal_stage">
+                      <option>Prospect</option><option>Term Sheet Issued</option><option>Due Diligence</option><option>Credit Approved</option><option>Closed</option><option>Declined</option>
+                    </select>
+                  </div>
+                  <div class="field"><label>Closing Target Date</label><input type="date" data-field="deal_close_date" /></div>
+                  <div class="field col-span-2"><label>Relationship Manager</label><input type="text" data-field="deal_rm" /></div>
+                  <div class="field"><label>Lead Underwriter</label><input type="text" data-field="deal_uw" /></div>
+                  <div class="field"><label>File / Deal ID</label><input type="text" data-field="deal_id" /></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Proposed Facility</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-4">
+                  <div class="field"><label>Facility Type</label>
+                    <select data-field="facility_type">
+                      <option>Revolving Line of Credit</option><option>Term Loan + Revolver</option><option>DIP Financing</option><option>Factoring</option><option>Inventory Finance</option>
+                    </select>
+                  </div>
+                  <div class="field"><label>Total Facility ($)</label><input type="number" data-field="facility_total" /></div>
+                  <div class="field"><label>A/R Sublimit ($)</label><input type="number" data-field="facility_ar_sublimit" /></div>
+                  <div class="field"><label>Inventory Sublimit ($)</label><input type="number" data-field="facility_inv_sublimit" /></div>
+                  <div class="field"><label>RE Sublimit ($)</label><input type="number" data-field="facility_re_sublimit" /></div>
+                  <div class="field"><label>Equipment Sublimit ($)</label><input type="number" data-field="facility_equip_sublimit" /></div>
+                  <div class="field"><label>Term (months)</label><input type="number" data-field="facility_term" /></div>
+                  <div class="field"><label>Maturity Date</label><input type="date" data-field="facility_maturity" /></div>
+                  <div class="field"><label>A/R Advance Rate (%)</label><input type="number" data-field="ar_advance_rate" /></div>
+                  <div class="field"><label>Inventory Advance Rate (%)</label><input type="number" data-field="inv_advance_rate" /></div>
+                  <div class="field"><label>RE Advance Rate (%)</label><input type="number" data-field="re_advance_rate" /></div>
+                  <div class="field"><label>Equipment Advance Rate (%)</label><input type="number" data-field="equip_advance_rate" /></div>
+                  <div class="field"><label>Interest Rate (Base)</label>
+                    <select data-field="rate_base"><option>SOFR</option><option>Prime</option><option>Fixed</option></select>
+                  </div>
+                  <div class="field"><label>Spread (%)</label><input type="number" step="0.01" data-field="rate_spread" /></div>
+                  <div class="field"><label>Floor (%)</label><input type="number" step="0.01" data-field="rate_floor" /></div>
+                  <div class="field"><label>Unused Line Fee (%)</label><input type="number" step="0.01" data-field="unused_fee" /></div>
+                  <div class="field col-span-4"><label>Closing Fees / Notes</label><textarea data-field="closing_fees_notes" rows="2"></textarea></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Deal Thesis & Key Risks</h3></div>
+              <div class="card-body">
+                <div class="form-grid">
+                  <div class="field"><label>Deal Thesis / Strengths</label><textarea data-field="deal_thesis" rows="4"></textarea></div>
+                  <div class="field"><label>Key Risks & Mitigants</label><textarea data-field="key_risks" rows="4"></textarea></div>
+                  <div class="field"><label>Use of Proceeds</label><textarea data-field="use_of_proceeds" rows="2"></textarea></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 2. BORROWER ═══════════════════════════════════ -->
+          <div class="tab-pane" id="tab-borrower">
+            <div class="card">
+              <div class="card-header"><h3>Borrower Information</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-3">
+                  <div class="field col-span-2"><label>Legal Entity Name</label><input type="text" data-field="bor_legal_name" /></div>
+                  <div class="field"><label>Entity Type</label>
+                    <select data-field="bor_entity_type"><option>LLC</option><option>Corporation</option><option>LP</option><option>LLP</option><option>S-Corp</option><option>Sole Prop</option></select>
+                  </div>
+                  <div class="field"><label>DBA / Trade Name</label><input type="text" data-field="bor_dba" /></div>
+                  <div class="field"><label>EIN / Tax ID</label><input type="text" data-field="bor_ein" /></div>
+                  <div class="field"><label>State of Incorporation</label><input type="text" data-field="bor_state_inc" /></div>
+                  <div class="field"><label>Headquarters State</label><input type="text" data-field="bor_hq_state" /></div>
+                  <div class="field"><label>Year Founded</label><input type="number" data-field="bor_year_founded" /></div>
+                  <div class="field"><label>Years in Business</label><input type="number" data-field="bor_years_biz" readonly /></div>
+                  <div class="field col-span-3"><label>Address</label><input type="text" data-field="bor_address" /></div>
+                  <div class="field col-span-2"><label>Primary NAICS / Industry</label><input type="text" data-field="bor_industry" /></div>
+                  <div class="field"><label>NAICS Code</label><input type="text" data-field="bor_naics" /></div>
+                  <div class="field"><label>Primary Product / Service</label><input type="text" data-field="bor_product" /></div>
+                  <div class="field"><label>Primary Customer Base</label><input type="text" data-field="bor_customers" /></div>
+                  <div class="field"><label>Seasonality</label><input type="text" data-field="bor_seasonality" /></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Ownership & Management</h3></div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="owner-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th><th>Title / Role</th><th class="num">Ownership %</th><th>Guarantor?</th><th>BK History?</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="owner-tbody"></tbody>
+                  </table>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="margin-top:8px" id="btn-add-owner">+ Add Owner</button>
+                <div class="form-grid fg-2" style="margin-top:16px">
+                  <div class="field"><label>CEO / President</label><input type="text" data-field="mgmt_ceo" /></div>
+                  <div class="field"><label>CFO / Controller</label><input type="text" data-field="mgmt_cfo" /></div>
+                  <div class="field col-span-2"><label>Management Depth / Notes</label><textarea data-field="mgmt_notes" rows="3"></textarea></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Existing Debt & Banking Relationships</h3></div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="debt-table">
+                    <thead>
+                      <tr>
+                        <th>Lender</th><th>Type</th><th class="num">Balance ($)</th><th class="num">Rate (%)</th><th>Maturity</th><th>Secured By</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="debt-tbody"></tbody>
+                  </table>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="margin-top:8px" id="btn-add-debt">+ Add Debt</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 3. A/R ELIGIBILITY ═══════════════════════════ -->
+          <div class="tab-pane" id="tab-ar-eligibility">
+            <div class="summary-kpi" id="ar-kpi-row">
+              <div class="kpi-box"><div class="kpi-label">Gross A/R</div><div class="kpi-value" id="kpi-gross-ar">—</div></div>
+              <div class="kpi-box"><div class="kpi-label">Total Ineligible</div><div class="kpi-value" id="kpi-total-ineligible">—</div></div>
+              <div class="kpi-box"><div class="kpi-label">Net Eligible A/R</div><div class="kpi-value" id="kpi-net-eligible">—</div></div>
+              <div class="kpi-box highlight"><div class="kpi-label">A/R Availability</div><div class="kpi-value" id="kpi-ar-avail">—</div><div class="kpi-sub" id="kpi-ar-avail-rate">at —% advance</div></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>A/R Aging Summary</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-add-aging-row">+ Add Customer</button>
+              </div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="ar-aging-table">
+                    <thead>
+                      <tr>
+                        <th>Customer Name</th>
+                        <th class="num">Current</th><th class="num">1–30</th><th class="num">31–60</th><th class="num">61–90</th><th class="num">>90</th>
+                        <th class="num">Total</th><th class="num">% of Total</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="ar-aging-tbody"></tbody>
+                    <tfoot>
+                      <tr>
+                        <td><strong>TOTAL</strong></td>
+                        <td class="num" id="ar-tot-cur">—</td><td class="num" id="ar-tot-30">—</td>
+                        <td class="num" id="ar-tot-60">—</td><td class="num" id="ar-tot-90">—</td>
+                        <td class="num" id="ar-tot-90p">—</td><td class="num" id="ar-tot-all">—</td>
+                        <td class="num">100%</td><td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Eligibility Criteria & Ineligibles</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-3">
+                  <div class="field"><label>Aging Cutoff (days past due)</label><input type="number" data-field="ar_aging_cutoff" value="90" /></div>
+                  <div class="field"><label>Concentration Limit (%)</label><input type="number" data-field="ar_conc_limit" value="20" /></div>
+                  <div class="field"><label>Cross-Age Rule (%)</label><input type="number" data-field="ar_crossage" value="50" /></div>
+                  <div class="field"><label>Ineligible — Over 90 Days ($)</label><input type="number" data-field="inelig_over90" /></div>
+                  <div class="field"><label>Ineligible — Concentration ($)</label><input type="number" data-field="inelig_conc" /></div>
+                  <div class="field"><label>Ineligible — Cross-Age ($)</label><input type="number" data-field="inelig_crossage" /></div>
+                  <div class="field"><label>Ineligible — Contra / Offsets ($)</label><input type="number" data-field="inelig_contra" /></div>
+                  <div class="field"><label>Ineligible — Foreign Debtors ($)</label><input type="number" data-field="inelig_foreign" /></div>
+                  <div class="field"><label>Ineligible — Gov't / Letters ($)</label><input type="number" data-field="inelig_govt" /></div>
+                  <div class="field"><label>Ineligible — Disputed / Credits ($)</label><input type="number" data-field="inelig_disputed" /></div>
+                  <div class="field"><label>Ineligible — Unbilled / Retainage ($)</label><input type="number" data-field="inelig_unbilled" /></div>
+                  <div class="field"><label>Other Ineligible ($)</label><input type="number" data-field="inelig_other" /></div>
+                  <div class="field"><label>Gross A/R ($)</label><input type="number" data-field="ar_gross" /></div>
+                  <div class="field"><label>Total Ineligibles ($)</label><input type="number" data-field="ar_total_inelig" readonly /></div>
+                  <div class="field"><label>Net Eligible A/R ($)</label><input type="number" data-field="ar_net_eligible" readonly /></div>
+                  <div class="field col-span-3"><label>Eligibility Notes</label><textarea data-field="ar_eligibility_notes" rows="3"></textarea></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Dilution Analysis</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-3">
+                  <div class="field"><label>Prior Year Dilution (%)</label><input type="number" step="0.01" data-field="dilution_prior_yr" /></div>
+                  <div class="field"><label>TTM Dilution (%)</label><input type="number" step="0.01" data-field="dilution_ttm" /></div>
+                  <div class="field"><label>Dilution Reserve Applied (%)</label><input type="number" step="0.01" data-field="dilution_reserve" /></div>
+                  <div class="field col-span-3"><label>Dilution Commentary</label><textarea data-field="dilution_notes" rows="2"></textarea></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 4. INVENTORY ══════════════════════════════════ -->
+          <div class="tab-pane" id="tab-inventory">
+            <div class="summary-kpi">
+              <div class="kpi-box"><div class="kpi-label">Total Inventory (Cost)</div><div class="kpi-value" id="kpi-inv-total">—</div></div>
+              <div class="kpi-box"><div class="kpi-label">Eligible Inventory</div><div class="kpi-value" id="kpi-inv-eligible">—</div></div>
+              <div class="kpi-box highlight"><div class="kpi-label">Inventory Availability</div><div class="kpi-value" id="kpi-inv-avail">—</div></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Inventory Detail</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-add-inv-row">+ Add Category</button>
+              </div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="inv-table">
+                    <thead>
+                      <tr>
+                        <th>Category / SKU Group</th><th>Valuation Basis</th>
+                        <th class="num">Book Value ($)</th><th class="num">NFLV ($)</th>
+                        <th class="num">Eligible ($)</th><th class="num">Advance Rate (%)</th>
+                        <th class="num">Availability ($)</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="inv-tbody"></tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="2"><strong>TOTAL</strong></td>
+                        <td class="num" id="inv-tot-book">—</td>
+                        <td class="num" id="inv-tot-nflv">—</td>
+                        <td class="num" id="inv-tot-elig">—</td>
+                        <td class="num">—</td>
+                        <td class="num" id="inv-tot-avail">—</td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Inventory Eligibility & Notes</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-3">
+                  <div class="field"><label>Inventory Method</label>
+                    <select data-field="inv_method"><option>FIFO</option><option>LIFO</option><option>Weighted Avg</option><option>Specific ID</option></select>
+                  </div>
+                  <div class="field"><label>Slow-Moving / Obsolete Reserve ($)</label><input type="number" data-field="inv_obsolete_reserve" /></div>
+                  <div class="field"><label>WIP Eligible?</label>
+                    <select data-field="inv_wip_eligible"><option>No</option><option>Yes — partial</option><option>Yes — full</option></select>
+                  </div>
+                  <div class="field col-span-3"><label>Inventory Eligibility Notes</label><textarea data-field="inv_notes" rows="3"></textarea></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 5. RE & EQUIPMENT ════════════════════════════ -->
+          <div class="tab-pane" id="tab-re-equipment">
+            <div class="card">
+              <div class="card-header"><h3>Real Estate</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-add-re-row">+ Add Property</button>
+              </div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="re-table">
+                    <thead>
+                      <tr>
+                        <th>Property Address</th><th>Type</th><th>Owned/Leased</th>
+                        <th class="num">Appraised Value ($)</th><th class="num">Mortgage Balance ($)</th>
+                        <th class="num">Advance Rate (%)</th><th class="num">Availability ($)</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="re-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Equipment</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-add-equip-row">+ Add Equipment</button>
+              </div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="equip-table">
+                    <thead>
+                      <tr>
+                        <th>Description</th><th>Year</th><th>Condition</th>
+                        <th class="num">FMV / Appraisal ($)</th><th class="num">NFLV ($)</th>
+                        <th class="num">Lien Balance ($)</th><th class="num">Advance Rate (%)</th>
+                        <th class="num">Availability ($)</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="equip-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 6. FINANCIAL ANALYSIS ════════════════════════ -->
+          <div class="tab-pane" id="tab-financial">
+            <div class="card">
+              <div class="card-header"><h3>Income Statement Spread</h3></div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="income-table">
+                    <thead>
+                      <tr>
+                        <th>Line Item</th>
+                        <th class="num" id="fin-yr1-hdr">FY —</th>
+                        <th class="num" id="fin-yr2-hdr">FY —</th>
+                        <th class="num" id="fin-yr3-hdr">FY —</th>
+                        <th class="num">TTM</th>
+                        <th class="num">Projected</th>
+                      </tr>
+                    </thead>
+                    <tbody id="income-tbody">
+                      <!-- Rows injected by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Balance Sheet Spread</h3></div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="bs-table">
+                    <thead>
+                      <tr>
+                        <th>Line Item</th>
+                        <th class="num" id="bs-yr1-hdr">FY —</th>
+                        <th class="num" id="bs-yr2-hdr">FY —</th>
+                        <th class="num" id="bs-yr3-hdr">FY —</th>
+                        <th class="num">Latest Interim</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bs-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Key Ratios & Covenants</h3></div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="ratio-table">
+                    <thead>
+                      <tr>
+                        <th>Metric</th>
+                        <th class="num">FY (−2)</th><th class="num">FY (−1)</th><th class="num">TTM</th>
+                        <th class="num">Covenant Threshold</th><th>Pass/Fail</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ratio-tbody"></tbody>
+                  </table>
+                </div>
+                <div class="form-grid fg-2" style="margin-top:16px">
+                  <div class="field"><label>Covenant Notes</label><textarea data-field="fin_covenant_notes" rows="4"></textarea></div>
+                  <div class="field"><label>Financial Analyst Commentary</label><textarea data-field="fin_analyst_notes" rows="4"></textarea></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Period Headers</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-4">
+                  <div class="field"><label>Fiscal Year End</label><input type="text" data-field="fin_fy_end" placeholder="12/31" /></div>
+                  <div class="field"><label>Year 1 (oldest) Label</label><input type="text" data-field="fin_yr1_label" placeholder="2022" /></div>
+                  <div class="field"><label>Year 2 Label</label><input type="text" data-field="fin_yr2_label" placeholder="2023" /></div>
+                  <div class="field"><label>Year 3 Label</label><input type="text" data-field="fin_yr3_label" placeholder="2024" /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 7. CREDIT MEMO ════════════════════════════════ -->
+          <div class="tab-pane" id="tab-credit-memo">
+            <div class="card">
+              <div class="card-header"><h3>Credit Summary / Memo</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-2">
+                  <div class="field"><label>Memo Date</label><input type="date" data-field="memo_date" /></div>
+                  <div class="field"><label>Credit Officer</label><input type="text" data-field="memo_credit_officer" /></div>
+                  <div class="field col-span-2"><label>Executive Summary</label><textarea data-field="memo_exec_summary" rows="5"></textarea></div>
+                  <div class="field col-span-2"><label>Business Description</label><textarea data-field="memo_biz_description" rows="4"></textarea></div>
+                  <div class="field col-span-2"><label>Industry Overview</label><textarea data-field="memo_industry" rows="3"></textarea></div>
+                  <div class="field col-span-2"><label>Collateral Discussion</label><textarea data-field="memo_collateral" rows="4"></textarea></div>
+                  <div class="field col-span-2"><label>Financial Discussion</label><textarea data-field="memo_financial" rows="4"></textarea></div>
+                  <div class="field col-span-2"><label>Management & Ownership</label><textarea data-field="memo_mgmt" rows="3"></textarea></div>
+                  <div class="field col-span-2"><label>Proposed Structure & Terms</label><textarea data-field="memo_structure" rows="4"></textarea></div>
+                  <div class="field col-span-2"><label>Conditions Precedent</label><textarea data-field="memo_conditions" rows="4"></textarea></div>
+                  <div class="field col-span-2"><label>Recommendation</label>
+                    <select data-field="memo_recommendation">
+                      <option>Approve</option><option>Approve with Conditions</option><option>Decline</option><option>Pend — Additional Info Required</option>
+                    </select>
+                  </div>
+                  <div class="field col-span-2"><label>Credit Officer Signature / Notes</label><textarea data-field="memo_sign_notes" rows="3"></textarea></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 8. BORROWING BASE CERT ═══════════════════════ -->
+          <div class="tab-pane" id="tab-bbc">
+            <div class="summary-kpi">
+              <div class="kpi-box"><div class="kpi-label">A/R Availability</div><div class="kpi-value" id="bbc-ar-avail">—</div></div>
+              <div class="kpi-box"><div class="kpi-label">Inventory Availability</div><div class="kpi-value" id="bbc-inv-avail">—</div></div>
+              <div class="kpi-box"><div class="kpi-label">RE + Equip Availability</div><div class="kpi-value" id="bbc-re-avail">—</div></div>
+              <div class="kpi-box highlight"><div class="kpi-label">Total Borrowing Base</div><div class="kpi-value" id="bbc-total">—</div></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Borrowing Base Certificate</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-3">
+                  <div class="field"><label>Certificate Date</label><input type="date" data-field="bbc_date" /></div>
+                  <div class="field"><label>Certificate Period</label><input type="text" data-field="bbc_period" /></div>
+                  <div class="field"><label>Prepared By</label><input type="text" data-field="bbc_prepared_by" /></div>
+
+                  <div class="field"><label>Gross A/R ($)</label><input type="number" data-field="bbc_gross_ar" /></div>
+                  <div class="field"><label>Less: Ineligible A/R ($)</label><input type="number" data-field="bbc_inelig_ar" /></div>
+                  <div class="field"><label>Net Eligible A/R ($)</label><input type="number" data-field="bbc_net_ar" readonly /></div>
+                  <div class="field"><label>A/R Advance Rate (%)</label><input type="number" data-field="bbc_ar_rate" /></div>
+                  <div class="field col-span-2"><label>A/R Availability ($)</label><input type="number" data-field="bbc_ar_avail_calc" readonly /></div>
+
+                  <div class="field"><label>Gross Inventory ($)</label><input type="number" data-field="bbc_gross_inv" /></div>
+                  <div class="field"><label>Less: Ineligible Inventory ($)</label><input type="number" data-field="bbc_inelig_inv" /></div>
+                  <div class="field"><label>Net Eligible Inventory ($)</label><input type="number" data-field="bbc_net_inv" readonly /></div>
+                  <div class="field"><label>Inventory Advance Rate (%)</label><input type="number" data-field="bbc_inv_rate" /></div>
+                  <div class="field"><label>Inventory Sublimit ($)</label><input type="number" data-field="bbc_inv_sublimit" /></div>
+                  <div class="field"><label>Inventory Availability ($)</label><input type="number" data-field="bbc_inv_avail_calc" readonly /></div>
+
+                  <div class="field"><label>RE Availability ($)</label><input type="number" data-field="bbc_re_avail" /></div>
+                  <div class="field"><label>Equipment Availability ($)</label><input type="number" data-field="bbc_equip_avail" /></div>
+                  <div class="field"><label>Total Borrowing Base ($)</label><input type="number" data-field="bbc_total_calc" readonly /></div>
+
+                  <div class="field"><label>Outstanding Loans ($)</label><input type="number" data-field="bbc_outstanding" /></div>
+                  <div class="field"><label>Availability / Excess ($)</label><input type="number" data-field="bbc_excess" readonly /></div>
+                  <div class="field"><label>Borrowing Base Deficiency ($)</label><input type="number" data-field="bbc_deficiency" readonly /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 9. FIELD EXAM ═════════════════════════════════ -->
+          <div class="tab-pane" id="tab-field-exam">
+            <div class="card">
+              <div class="card-header"><h3>Field Examination / Audit</h3></div>
+              <div class="card-body">
+                <div class="form-grid fg-3">
+                  <div class="field"><label>Exam Date</label><input type="date" data-field="exam_date" /></div>
+                  <div class="field"><label>Examiner(s)</label><input type="text" data-field="exam_examiner" /></div>
+                  <div class="field"><label>Exam Type</label>
+                    <select data-field="exam_type"><option>Initial</option><option>Annual</option><option>For Cause</option><option>Surprise</option></select>
+                  </div>
+                  <div class="field col-span-3"><label>Scope of Exam</label><textarea data-field="exam_scope" rows="2"></textarea></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Findings</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-add-finding">+ Add Finding</button>
+              </div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="findings-table">
+                    <thead>
+                      <tr><th>#</th><th>Area</th><th>Finding</th><th>Severity</th><th>Recommendation</th><th>Status</th><th></th></tr>
+                    </thead>
+                    <tbody id="findings-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Exam Summary & Conclusions</h3></div>
+              <div class="card-body">
+                <div class="form-grid">
+                  <div class="field"><label>Overall Assessment</label>
+                    <select data-field="exam_assessment"><option>Satisfactory</option><option>Needs Improvement</option><option>Unsatisfactory</option></select>
+                  </div>
+                  <div class="field"><label>Key Conclusions</label><textarea data-field="exam_conclusions" rows="4"></textarea></div>
+                  <div class="field"><label>Recommended Reserves / Adjustments</label><textarea data-field="exam_reserves" rows="3"></textarea></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 10. COLLATERAL MONITORING ════════════════════ -->
+          <div class="tab-pane" id="tab-collateral-monitoring">
+            <div class="card">
+              <div class="card-header"><h3>Collateral Monitoring Schedule</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-add-monitor-row">+ Add Item</button>
+              </div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="monitor-table">
+                    <thead>
+                      <tr>
+                        <th>Report / Item</th><th>Frequency</th><th>Due Date</th>
+                        <th>Last Received</th><th>Status</th><th>Notes</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="monitor-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Borrowing Base Trend</h3></div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="bbc-trend-table">
+                    <thead>
+                      <tr>
+                        <th>Period</th><th class="num">Gross A/R ($)</th><th class="num">Net Eligible ($)</th>
+                        <th class="num">Inventory ($)</th><th class="num">Total BB ($)</th>
+                        <th class="num">Outstanding ($)</th><th class="num">Availability ($)</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="bbc-trend-tbody"></tbody>
+                  </table>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="margin-top:8px" id="btn-add-trend-row">+ Add Period</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 11. COVENANT CALENDAR ════════════════════════ -->
+          <div class="tab-pane" id="tab-covenant-calendar">
+            <div class="card">
+              <div class="card-header"><h3>Covenant Compliance Calendar</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-add-covenant">+ Add Covenant</button>
+              </div>
+              <div class="card-body">
+                <div class="data-table-wrap">
+                  <table class="data-table" id="covenant-table">
+                    <thead>
+                      <tr>
+                        <th>Covenant</th><th>Type</th><th>Threshold</th><th>Frequency</th>
+                        <th>Test Date</th><th class="num">Actual</th><th>Status</th><th>Notes</th><th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="covenant-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ 12. HISTORY / VERSION CONTROL ════════════════ -->
+          <div class="tab-pane" id="tab-history">
+            <div class="card">
+              <div class="card-header"><h3>Deal History & Version Control</h3>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-secondary btn-sm" id="btn-snapshot">Save Snapshot</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="version-list"></div>
+                <div id="version-empty" style="color:var(--gray-4);font-size:13px;text-align:center;padding:20px">No snapshots yet. Click "Save Snapshot" to record the current state.</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Activity Log</h3></div>
+              <div class="card-body">
+                <div id="activity-log" style="font-size:12px;font-family:monospace;max-height:300px;overflow-y:auto;color:var(--gray-5)"></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /tab-content -->
+      </div><!-- /deal-workspace -->
+    </div><!-- /main -->
+  </div><!-- /body-wrap -->
+</div><!-- /app -->
+
+<!-- ── AI Extraction Side Panel ──────────────────────────────────────────── -->
+<div id="ai-panel">
+  <div class="panel-header">
+    <h3>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      AI Document Extraction
+    </h3>
+    <button class="btn btn-secondary btn-sm" id="btn-close-ai-panel">✕</button>
+  </div>
+  <div id="ai-panel-body">
+    <div class="upload-zone" id="upload-zone">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <p>Drop files here or <strong>click to browse</strong></p>
+      <div class="file-types">Excel (.xlsx, .xls) · PDF · Word (.docx, .doc)</div>
+    </div>
+    <input type="file" id="file-input" accept=".xlsx,.xls,.pdf,.docx,.doc" multiple />
+
+    <div id="uploaded-files-list" style="display:none">
+      <div style="font-size:12px;font-weight:600;color:var(--gray-5);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">Loaded Files</div>
+      <div id="files-chips" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+    </div>
+
+    <div>
+      <label style="font-size:12px;font-weight:600;color:var(--gray-5);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:6px">Extract Into</label>
+      <select id="extract-target" style="width:100%;padding:7px 10px;border:1px solid var(--gray-3);border-radius:4px;font-size:13px;font-family:var(--font)">
+        <option value="all">All Sections (Auto-Detect)</option>
+        <option value="deal-overview">Deal Overview</option>
+        <option value="borrower">Borrower Information</option>
+        <option value="ar-eligibility">A/R Eligibility</option>
+        <option value="inventory">Inventory</option>
+        <option value="re-equipment">RE & Equipment</option>
+        <option value="financial">Financial Analysis</option>
+        <option value="credit-memo">Credit Memo</option>
+        <option value="bbc">Borrowing Base Certificate</option>
+        <option value="field-exam">Field Exam</option>
+      </select>
+    </div>
+
+    <button class="btn btn-accent" id="btn-run-extraction" disabled style="width:100%;justify-content:center">
+      Run AI Extraction
+    </button>
+
+    <div id="extraction-progress-wrap" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:12px;color:var(--gray-5)" id="extraction-status-text">Processing...</span>
+        <span style="font-size:12px;color:var(--gray-5)" id="extraction-pct">0%</span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="extraction-progress-bar" style="width:0%"></div></div>
+    </div>
+
+    <div id="ai-log"></div>
+
+    <div id="extraction-results" style="display:none">
+      <div style="font-size:12px;font-weight:600;color:var(--gray-5);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Extracted Fields</div>
+      <div id="results-summary" style="font-size:12px;background:var(--gray-1);border-radius:4px;padding:10px;max-height:200px;overflow-y:auto;font-family:monospace;white-space:pre-wrap;color:var(--gray-5)"></div>
+      <button class="btn btn-primary btn-sm" id="btn-apply-extraction" style="width:100%;justify-content:center;margin-top:8px">Apply to Deal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Settings Modal ────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Settings</h3>
+      <button class="btn btn-secondary btn-sm" id="btn-close-settings">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field">
+          <label>Anthropic API Key</label>
+          <input type="password" id="settings-api-key" placeholder="sk-ant-..." />
+          <div class="hint">Stored in your browser's localStorage. For team deployments, set in config.js instead.</div>
+        </div>
+        <div class="field">
+          <label>Company Name (shown in header)</label>
+          <input type="text" id="settings-company" />
+        </div>
+        <div class="field">
+          <label>Default A/R Advance Rate (%)</label>
+          <input type="number" id="settings-ar-rate" value="85" />
+        </div>
+        <div class="field">
+          <label>Default Inventory Advance Rate (%)</label>
+          <input type="number" id="settings-inv-rate" value="50" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="btn-cancel-settings">Cancel</button>
+      <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── New Deal Modal ────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="new-deal-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Deal</h3>
+      <button class="btn btn-secondary btn-sm" id="btn-close-new-deal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>Borrower / Company Name</label><input type="text" id="nd-name" placeholder="ABC Manufacturing LLC" /></div>
+        <div class="field"><label>Deal Stage</label>
+          <select id="nd-stage"><option>Prospect</option><option>Term Sheet Issued</option><option>Due Diligence</option><option>Credit Approved</option></select>
+        </div>
+        <div class="field"><label>Relationship Manager</label><input type="text" id="nd-rm" /></div>
+        <div class="field"><label>Lead Underwriter</label><input type="text" id="nd-uw" /></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="btn-cancel-new-deal">Cancel</button>
+      <button class="btn btn-primary" id="btn-create-deal">Create Deal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── External libraries (CDN) ─────────────────────────────────────────── -->
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- SheetJS for Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- Mammoth for Word docs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
